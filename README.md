@@ -111,7 +111,7 @@ We're not just making calls. We're building a **fully automated pipeline** with 
 
 ## 🚀 Get Started in 60 Seconds
 
-### Installation
+The `telnyx-transcribe` command (or just `tt`) will be available in your terminal after installation.
 
 <div align="center">
 
@@ -123,17 +123,25 @@ We're not just making calls. We're building a **fully automated pipeline** with 
 
 </div>
 
-### Quick Install
+### Using pip (Recommended)
 
 ```bash
-# Using pip (recommended)
+# Install the package
 pip install telnyx-transcribe
-
-# Or using pipx for isolated environment
-pipx install telnyx-transcribe
 
 # Verify installation
 telnyx-transcribe --version
+```
+
+### Using pipx (Isolated Environment)
+
+```bash
+# Install pipx if you don't have it
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
+# Install telnyx-transcribe
+pipx install telnyx-transcribe
 ```
 
 ### From Source
@@ -142,6 +150,10 @@ telnyx-transcribe --version
 # Clone the repo
 git clone https://github.com/yigitkonur/telnyx-transcribe.git
 cd telnyx-transcribe
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install in development mode
 pip install -e ".[dev]"
@@ -153,31 +165,32 @@ pip install -e ".[dev]"
 
 ## 🎮 Usage: Fire and Forget
 
+The workflow is dead simple.
+
 ### 📞 Make Calls & Transcribe
 
-The main workflow — call a list of numbers, play audio, record, and transcribe:
-
-```bash
-# Basic usage
-telnyx-transcribe call numbers.txt
-
-# With custom output file
-telnyx-transcribe call numbers.txt --output campaign_results.tsv
-
-# With more concurrent workers
-telnyx-transcribe call numbers.txt --workers 10
-```
-
-Your `numbers.txt` should have one phone number per line (E.164 format):
+**1. Create your numbers file** (one E.164 number per line):
 ```
 +14155551234
 +14155551235
 +14155551236
 ```
 
+**2. Run the command:**
+```bash
+telnyx-transcribe call numbers.txt
+```
+
+**3. Check your results:**
+```bash
+cat results.tsv
+```
+
+That's it. All calls made, recorded, and transcribed.
+
 ### 🎧 Standalone Transcription
 
-Already have audio files? Transcribe them directly:
+Already have audio files? Transcribe them directly without making calls:
 
 ```bash
 # Transcribe a single file
@@ -186,8 +199,8 @@ telnyx-transcribe transcribe recording.mp3
 # Transcribe all files in a directory
 telnyx-transcribe transcribe ./recordings/
 
-# With custom output and language
-telnyx-transcribe transcribe ./recordings/ --output results.tsv --language en
+# With language hint for better accuracy
+telnyx-transcribe transcribe ./recordings/ --language en
 ```
 
 **Supported formats:** MP3, MP4, WAV, M4A, WEBM, OGG, FLAC, MPEG, MPGA
@@ -206,7 +219,7 @@ telnyx-transcribe server --port 8080 --host 0.0.0.0
 
 ### ✅ Validate Configuration
 
-Check if everything is set up correctly:
+Check if everything is set up correctly before running:
 
 ```bash
 telnyx-transcribe validate
@@ -235,7 +248,7 @@ telnyx-transcribe validate
 
 ## ⚙️ Configuration
 
-All configuration is done via environment variables. Create a `.env` file or set them directly.
+All configuration is done via environment variables. Create a `.env` file or export them directly.
 
 ### Required Variables
 
@@ -256,20 +269,20 @@ AUDIO_URL=https://example.com/your-message.mp3
 
 ```bash
 # Server settings
-WEBHOOK_HOST=0.0.0.0
-WEBHOOK_PORT=5000
+WEBHOOK_HOST=0.0.0.0       # Default: 0.0.0.0
+WEBHOOK_PORT=5000          # Default: 5000
 
 # Output settings
-OUTPUT_FILE=results.tsv
+OUTPUT_FILE=results.tsv    # Default: results.tsv
 
 # Performance tuning
-MAX_WORKERS=5
-MAX_RETRIES=10
-RETRY_DELAY=2.0
+MAX_WORKERS=5              # Default: 5 concurrent calls
+MAX_RETRIES=10             # Default: 10 retries
+RETRY_DELAY=2.0            # Default: 2 seconds base delay
 
 # Recording settings
-RECORDING_FORMAT=mp3
-RECORDING_CHANNELS=single
+RECORDING_FORMAT=mp3       # Default: mp3
+RECORDING_CHANNELS=single  # Default: single
 ```
 
 ### Quick Setup
@@ -279,7 +292,7 @@ RECORDING_CHANNELS=single
 cp .env.example .env
 
 # Edit with your credentials
-nano .env  # or your favorite editor
+nano .env
 
 # Validate configuration
 telnyx-transcribe validate
@@ -295,7 +308,6 @@ telnyx-transcribe validate
 ### What you get
 - Programmable voice API for making/receiving calls
 - Call control, recording, and webhook events
-- Enables the `call` command
 
 ### Setup Steps
 1. Go to [portal.telnyx.com](https://portal.telnyx.com)
@@ -354,29 +366,71 @@ OPENAI_API_KEY=sk-...
 
 ```
 telnyx-transcribe/
-├── src/
-│   └── telnyx_transcribe/
-│       ├── __init__.py          # Package metadata
-│       ├── __main__.py          # Entry point for python -m
-│       ├── cli.py               # Typer CLI commands
-│       ├── app.py               # Flask application factory
-│       ├── config.py            # Settings management
-│       ├── models.py            # Data models (Call, TranscriptionResult)
-│       ├── exceptions.py        # Custom exceptions
-│       ├── services/
-│       │   ├── call_service.py          # Telnyx call management
-│       │   ├── transcription_service.py # OpenAI Whisper integration
-│       │   └── output_service.py        # TSV/CSV output handling
-│       ├── webhooks/
-│       │   └── handlers.py      # Telnyx webhook processing
-│       └── utils/
-│           ├── logging.py       # Logging configuration
-│           └── console.py       # Rich console output
-├── tests/                       # Test suite
-├── pyproject.toml              # Project configuration
-├── requirements.txt            # Dependencies
-├── .env.example                # Example environment file
-└── README.md                   # This file
+├── src/telnyx_transcribe/
+│   ├── cli.py               # Typer CLI commands
+│   ├── app.py               # Flask application factory
+│   ├── config.py            # Settings management
+│   ├── models.py            # Data models (Call, TranscriptionResult)
+│   ├── exceptions.py        # Custom exceptions
+│   ├── services/
+│   │   ├── call_service.py          # Telnyx call management
+│   │   ├── transcription_service.py # OpenAI Whisper integration
+│   │   └── output_service.py        # TSV/CSV output handling
+│   ├── webhooks/
+│   │   └── handlers.py      # Telnyx webhook processing
+│   └── utils/
+│       ├── logging.py       # Logging configuration
+│       └── console.py       # Rich console output
+├── tests/                   # Test suite
+├── pyproject.toml          # Project configuration
+├── requirements.txt        # Dependencies
+├── .env.example            # Example environment file
+└── README.md               # This file
+```
+
+---
+
+## 🛠️ For Developers & Tinkerers
+
+### Running Tests
+
+```bash
+# Install dev dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Run with coverage
+pytest --cov=telnyx_transcribe
+
+# Type checking
+mypy src/
+
+# Linting
+ruff check src/
+```
+
+### Using as a Library
+
+```python
+from telnyx_transcribe import Settings
+from telnyx_transcribe.services import CallService, TranscriptionService
+
+# Configure settings
+settings = Settings(
+    telnyx_api_key="your_key",
+    openai_api_key="your_key",
+    # ... other settings
+)
+
+# Use services directly
+call_service = CallService(settings)
+call = call_service.initiate_call("+14155551234")
+
+transcription_service = TranscriptionService(settings)
+result = transcription_service.transcribe_file("recording.mp3")
+print(result.text)
 ```
 
 ---
@@ -412,63 +466,11 @@ telnyx-transcribe server --port 5000
 
 ---
 
-## 🛠️ For Developers & Tinkerers
-
-### Running from Source
-
-```bash
-# Clone and setup
-git clone https://github.com/yigitkonur/telnyx-transcribe.git
-cd telnyx-transcribe
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install in development mode
-pip install -e ".[dev]"
-
-# Run tests
-pytest
-
-# Type checking
-mypy src/
-
-# Linting
-ruff check src/
-```
-
-### Using as a Library
-
-```python
-from telnyx_transcribe import Settings
-from telnyx_transcribe.services import CallService, TranscriptionService
-
-# Configure settings
-settings = Settings(
-    telnyx_api_key="your_key",
-    openai_api_key="your_key",
-    # ... other settings
-)
-
-# Use services directly
-call_service = CallService(settings)
-call = call_service.initiate_call("+14155551234")
-
-transcription_service = TranscriptionService(settings)
-result = transcription_service.transcribe_file("recording.mp3")
-print(result.text)
-```
-
----
-
 ## 📜 Backstory
 
-This project started from a simple need — automate phone-based surveys and transcribe the responses. The original tweet that sparked it all:
+This project started from a simple need — automate phone-based surveys and transcribe the responses. What began as a quick script evolved into a full-featured, production-ready tool.
 
 > https://twitter.com/yigitkonur/status/1654827917845860353
-
-What began as a quick script evolved into a full-featured, production-ready tool that handles thousands of calls with ease.
 
 ---
 
