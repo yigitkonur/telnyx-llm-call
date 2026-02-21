@@ -39,8 +39,8 @@ a Flask server handles the Telnyx webhook lifecycle. the whole pipeline is event
 ## install
 
 ```bash
-git clone https://github.com/yigitkonur/telnyx-llm-call.git
-cd telnyx-llm-call
+git clone https://github.com/yigitkonur/cli-bulk-caller.git
+cd cli-bulk-caller
 pip install .
 ```
 
