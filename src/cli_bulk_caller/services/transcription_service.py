@@ -16,9 +16,9 @@ from typing import BinaryIO, Callable, Generator, Optional, Union
 import httpx
 from openai import OpenAI
 
-from telnyx_transcribe.config import Settings
-from telnyx_transcribe.exceptions import RecordingError, TranscriptionError
-from telnyx_transcribe.models import TranscriptionResult, TranscriptionStatus
+from cli_bulk_caller.config import Settings
+from cli_bulk_caller.exceptions import RecordingError, TranscriptionError
+from cli_bulk_caller.models import TranscriptionResult, TranscriptionStatus
 
 logger = logging.getLogger(__name__)
 

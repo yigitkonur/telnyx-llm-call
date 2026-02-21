@@ -8,8 +8,8 @@ and OpenAI Whisper for transcription services.
 __version__ = "2.0.0"
 __author__ = "Yiğit Konur"
 
-from telnyx_transcribe.config import Settings
-from telnyx_transcribe.models import Call, CallStatus, TranscriptionResult
+from cli_bulk_caller.config import Settings
+from cli_bulk_caller.models import Call, CallStatus, TranscriptionResult
 
 __all__ = [
     "Settings",

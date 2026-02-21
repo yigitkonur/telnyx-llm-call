@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "telnyx-transcribe"
+name = "cli-bulk-caller"
 version = "2.0.0"
 description = "🎙️ Automated call-and-transcribe solution using Telnyx API and OpenAI Whisper"
 readme = "README.md"
@@ -67,15 +67,15 @@ docs = [
 ]
 
 [project.scripts]
-telnyx-transcribe = "telnyx_transcribe.cli:run"
-tt = "telnyx_transcribe.cli:run"
+cli-bulk-caller = "cli_bulk_caller.cli:run"
+tt = "cli_bulk_caller.cli:run"
 
 [project.urls]
-Homepage = "https://github.com/yigitkonur/telnyx-transcribe"
-Documentation = "https://github.com/yigitkonur/telnyx-transcribe#readme"
-Repository = "https://github.com/yigitkonur/telnyx-transcribe.git"
-Issues = "https://github.com/yigitkonur/telnyx-transcribe/issues"
-Changelog = "https://github.com/yigitkonur/telnyx-transcribe/releases"
+Homepage = "https://github.com/yigitkonur/cli-bulk-caller"
+Documentation = "https://github.com/yigitkonur/cli-bulk-caller#readme"
+Repository = "https://github.com/yigitkonur/cli-bulk-caller.git"
+Issues = "https://github.com/yigitkonur/cli-bulk-caller/issues"
+Changelog = "https://github.com/yigitkonur/cli-bulk-caller/releases"
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -83,7 +83,7 @@ include = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/telnyx_transcribe"]
+packages = ["src/cli_bulk_caller"]
 
 [tool.ruff]
 target-version = "py310"
@@ -106,7 +106,7 @@ ignore = [
 ]
 
 [tool.ruff.isort]
-known-first-party = ["telnyx_transcribe"]
+known-first-party = ["cli_bulk_caller"]
 
 [tool.black]
 line-length = 100
@@ -131,10 +131,10 @@ ignore_missing_imports = true
 testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_functions = ["test_*"]
-addopts = "-v --cov=telnyx_transcribe --cov-report=term-missing"
+addopts = "-v --cov=cli_bulk_caller --cov-report=term-missing"
 
 [tool.coverage.run]
-source = ["src/telnyx_transcribe"]
+source = ["src/cli_bulk_caller"]
 branch = true
 
 [tool.coverage.report]

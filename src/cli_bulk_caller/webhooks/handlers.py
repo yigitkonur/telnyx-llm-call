@@ -11,11 +11,11 @@ from typing import TYPE_CHECKING, Optional
 
 from flask import Blueprint, request, jsonify
 
-from telnyx_transcribe.exceptions import WebhookError
-from telnyx_transcribe.models import CallTranscriptionResult
+from cli_bulk_caller.exceptions import WebhookError
+from cli_bulk_caller.models import CallTranscriptionResult
 
 if TYPE_CHECKING:
-    from telnyx_transcribe.services import CallService, TranscriptionService, OutputService
+    from cli_bulk_caller.services import CallService, TranscriptionService, OutputService
 
 logger = logging.getLogger(__name__)
 

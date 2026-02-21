@@ -1,7 +1,7 @@
 bulk outbound calls with automatic transcription. places calls via Telnyx, plays a prompt, records the response, downloads the audio, and runs it through OpenAI Whisper. results stream to a TSV file as they complete.
 
 ```bash
-telnyx-transcribe call numbers.txt
+cli-bulk-caller call numbers.txt
 ```
 
 also works as a standalone transcriber for local audio files — no Telnyx needed.
@@ -44,7 +44,7 @@ cd cli-bulk-caller
 pip install .
 ```
 
-this registers two CLI commands: `telnyx-transcribe` and `tt` (short alias).
+this registers two CLI commands: `cli-bulk-caller` and `tt` (short alias).
 
 ### configure
 
@@ -80,8 +80,8 @@ RETRY_DELAY=2.0
 ### place calls and transcribe
 
 ```bash
-telnyx-transcribe call numbers.txt
-telnyx-transcribe call numbers.txt --output calls.tsv --workers 10
+cli-bulk-caller call numbers.txt
+cli-bulk-caller call numbers.txt --output calls.tsv --workers 10
 ```
 
 `numbers.txt` is one E.164 phone number per line.
@@ -89,8 +89,8 @@ telnyx-transcribe call numbers.txt --output calls.tsv --workers 10
 ### transcribe local files
 
 ```bash
-telnyx-transcribe transcribe recording.mp3
-telnyx-transcribe transcribe ./recordings/ --workers 3 --language en
+cli-bulk-caller transcribe recording.mp3
+cli-bulk-caller transcribe ./recordings/ --workers 3 --language en
 ```
 
 supports `.mp3`, `.wav`, `.m4a`, `.ogg`, `.flac`, `.webm`, `.mp4`, `.mpeg`, `.mpga`.
@@ -98,13 +98,13 @@ supports `.mp3`, `.wav`, `.m4a`, `.ogg`, `.flac`, `.webm`, `.mp4`, `.mpeg`, `.mp
 ### run webhook server standalone
 
 ```bash
-telnyx-transcribe server --port 5000 --host 0.0.0.0 --output results.tsv
+cli-bulk-caller server --port 5000 --host 0.0.0.0 --output results.tsv
 ```
 
 ### validate config
 
 ```bash
-telnyx-transcribe validate
+cli-bulk-caller validate
 ```
 
 prints a checklist of which required env vars are set.
@@ -149,7 +149,7 @@ the webhook server must be publicly reachable for Telnyx to deliver events. use 
 ## project structure
 
 ```
-src/telnyx_transcribe/
+src/cli_bulk_caller/
   __init__.py              — package root
   __main__.py              — python -m support
   app.py                   — Flask app factory + orchestrator

@@ -14,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Union
 
-from telnyx_transcribe.models import CallTranscriptionResult, TranscriptionResult
+from cli_bulk_caller.models import CallTranscriptionResult, TranscriptionResult
 
 logger = logging.getLogger(__name__)
 

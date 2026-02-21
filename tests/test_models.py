@@ -6,7 +6,7 @@ from datetime import datetime
 
 import pytest
 
-from telnyx_transcribe.models import (
+from cli_bulk_caller.models import (
     Call,
     CallStatus,
     CallTranscriptionResult,

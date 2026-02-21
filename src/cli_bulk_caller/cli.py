@@ -13,15 +13,15 @@ from typing import Optional
 import typer
 from typing_extensions import Annotated
 
-from telnyx_transcribe import __version__
-from telnyx_transcribe.config import Settings, get_settings
-from telnyx_transcribe.exceptions import ConfigurationError
-from telnyx_transcribe.utils.console import Console, print_banner, create_progress_bar
-from telnyx_transcribe.utils.logging import setup_logging
+from cli_bulk_caller import __version__
+from cli_bulk_caller.config import Settings, get_settings
+from cli_bulk_caller.exceptions import ConfigurationError
+from cli_bulk_caller.utils.console import Console, print_banner, create_progress_bar
+from cli_bulk_caller.utils.logging import setup_logging
 
 # Create CLI app
 app = typer.Typer(
-    name="telnyx-transcribe",
+    name="cli-bulk-caller",
     help="🎙️ Automated call-and-transcribe solution using Telnyx & OpenAI Whisper.",
     add_completion=False,
     no_args_is_help=True,
@@ -34,7 +34,7 @@ console = Console()
 def version_callback(value: bool) -> None:
     """Print version and exit."""
     if value:
-        console.print(f"telnyx-transcribe version [bold cyan]{__version__}[/bold cyan]")
+        console.print(f"cli-bulk-caller version [bold cyan]{__version__}[/bold cyan]")
         raise typer.Exit()
 
 
@@ -111,7 +111,7 @@ def call(
         raise typer.Exit(1)
     
     # Load numbers
-    from telnyx_transcribe.services.call_service import load_numbers_from_file
+    from cli_bulk_caller.services.call_service import load_numbers_from_file
     numbers = load_numbers_from_file(str(numbers_file))
     
     if not numbers:
@@ -122,7 +122,7 @@ def call(
     console.info(f"Output will be written to [bold]{output}[/bold]")
     
     # Initialize application
-    from telnyx_transcribe.app import Application
+    from cli_bulk_caller.app import Application
     application = Application(settings)
     
     # Start calls
@@ -209,7 +209,7 @@ def transcribe(
     console.info(f"Output will be written to [bold]{output}[/bold]")
     
     # Initialize services
-    from telnyx_transcribe.services import TranscriptionService, OutputService
+    from cli_bulk_caller.services import TranscriptionService, OutputService
     
     transcription_service = TranscriptionService(settings)
     output_service = OutputService(output)
@@ -327,7 +327,7 @@ def server(
     console.info(f"Output will be written to [bold]{output}[/bold]")
     console.print("\n[dim]Press Ctrl+C to stop the server[/dim]\n")
     
-    from telnyx_transcribe.app import create_app
+    from cli_bulk_caller.app import create_app
     
     flask_app = create_app(settings)
     

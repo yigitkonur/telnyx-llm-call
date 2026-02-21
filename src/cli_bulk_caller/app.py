@@ -11,9 +11,9 @@ from typing import Optional
 
 from flask import Flask
 
-from telnyx_transcribe.config import Settings
-from telnyx_transcribe.services import CallService, TranscriptionService, OutputService
-from telnyx_transcribe.webhooks import create_webhook_blueprint, WebhookHandler
+from cli_bulk_caller.config import Settings
+from cli_bulk_caller.services import CallService, TranscriptionService, OutputService
+from cli_bulk_caller.webhooks import create_webhook_blueprint, WebhookHandler
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ def create_app(settings: Optional[Settings] = None) -> Flask:
     Returns:
         Configured Flask application.
     """
-    from telnyx_transcribe.config import get_settings
+    from cli_bulk_caller.config import get_settings
     
     if settings is None:
         settings = get_settings()
@@ -67,7 +67,7 @@ def create_app(settings: Optional[Settings] = None) -> Flask:
     # Root health check
     @app.route("/")
     def root():
-        return {"status": "ok", "service": "telnyx-transcribe"}, 200
+        return {"status": "ok", "service": "cli-bulk-caller"}, 200
     
     @app.route("/health")
     def health():
@@ -95,7 +95,7 @@ class Application:
         Args:
             settings: Optional settings instance.
         """
-        from telnyx_transcribe.config import get_settings
+        from cli_bulk_caller.config import get_settings
         
         self.settings = settings or get_settings()
         self.call_service = CallService(self.settings)

@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import pytest
 
-from telnyx_transcribe.config import Settings, get_settings
+from cli_bulk_caller.config import Settings, get_settings
 
 
 class TestSettings:

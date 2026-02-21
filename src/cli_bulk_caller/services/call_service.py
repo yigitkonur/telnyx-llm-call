@@ -13,9 +13,9 @@ from typing import Callable, Iterator, Optional
 
 import telnyx
 
-from telnyx_transcribe.config import Settings
-from telnyx_transcribe.exceptions import CallError, TelnyxAPIError
-from telnyx_transcribe.models import Call, CallStatus
+from cli_bulk_caller.config import Settings
+from cli_bulk_caller.exceptions import CallError, TelnyxAPIError
+from cli_bulk_caller.models import Call, CallStatus
 
 logger = logging.getLogger(__name__)
 
